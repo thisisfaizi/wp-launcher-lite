@@ -1,0 +1,9 @@
+# WP Launcher Lite pre-install
+# The installer replaces this file with the real routing rules.
+Options -Indexes
+DirectoryIndex index.php
+<FilesMatch "^(cron\.php)$">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+</FilesMatch>

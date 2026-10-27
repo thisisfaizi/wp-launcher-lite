@@ -1,0 +1,7 @@
+# Runtime folders created by the installer (if you run it from the checkout)
+launcher/wpl-data/
+launcher/wpl-core/
+launcher/wpl-content/
+launcher/wpl-uploads/
+dist/
+.DS_Store
