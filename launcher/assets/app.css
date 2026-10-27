@@ -191,6 +191,7 @@ td .row-actions { justify-content: flex-end; }
 .hero-sm h1 { font-size: 1.9rem; }
 .lede { color: var(--muted); font-size: 1.05rem; max-width: 620px; }
 .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(290px, 100%), 360px)); justify-content: center; gap: 20px; }
+.cards-single { padding-top: clamp(16px, 6vh, 64px); }
 .demo-card { padding: 0; overflow: hidden; display: flex; flex-direction: column; }
 .demo-img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block; background: var(--surface-2); border-bottom: 1px solid var(--border); }
 .demo-img-blank { display: grid; place-items: center; background: linear-gradient(135deg, var(--accent-soft), var(--surface-2)); }

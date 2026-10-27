@@ -42,12 +42,13 @@ class Fs
      * the string replaced — the token swap that turns a template's URLs into a
      * clone's. Returns the number of files copied.
      */
-    public static function copyTree(string $src, string $dst, array $replace = [], int $maxTextBytes = 5242880): int
+    public static function copyTree(string $src, string $dst, array $replace = [], int $maxTextBytes = 5242880, array $skip = []): int
     {
         if (!is_dir($src)) {
             return 0;
         }
         self::ensureDir($dst);
+        $skip = array_flip(array_map(fn ($p) => ltrim(str_replace('\\', '/', $p), '/'), $skip));
         $count = 0;
         $it = new RecursiveIteratorIterator(
             new RecursiveDirectoryIterator($src, FilesystemIterator::SKIP_DOTS),
@@ -60,6 +61,9 @@ class Fs
             }
             if ($item->isDir()) {
                 self::ensureDir($target);
+                continue;
+            }
+            if ($skip && isset($skip[str_replace('\\', '/', $it->getSubPathName())])) {
                 continue;
             }
             $ext = strtolower($item->getExtension());

@@ -141,7 +141,8 @@ class Sites
             if ($login !== $config['demo']['admin_user']) {
                 Db::update('wpl_sites', ['admin_user' => $login], 'slug = ?', [$slug]);
             }
-            Fs::copyTree(self::uploadsDir($from), self::uploadsDir($slug), [$from => $slug]);
+            $skip = SiteDb::dropUpgraderPackages($slug);
+            Fs::copyTree(self::uploadsDir($from), self::uploadsDir($slug), [$from => $slug], 5242880, $skip);
             Fs::ensureDir(self::uploadsDir($slug));
             self::writeConfig($slug);
             Db::update('wpl_sites', ['status' => 'active'], 'slug = ?', [$slug]);

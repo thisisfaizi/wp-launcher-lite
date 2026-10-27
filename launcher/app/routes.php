@@ -129,7 +129,24 @@ function wpl_public_routes(string $route): void
             $email = '';
         }
         $site = Sites::launch($bp, Visitor::ownerHash(), $email, Http::ip());
-        Http::redirect(url('ready/' . $site['slug']));
+        Http::redirect(url((Http::post('next') === 'go' ? 'go/' : 'ready/') . $site['slug']));
+    }
+
+    // One product's page, for a "Try the demo" button on the operator's own
+    // site. Launching stays a POST so link previews and crawlers can't create
+    // demos; the page submits itself when no email is asked for. A visitor who
+    // already has this demo running is taken back into it.
+    if (preg_match('#^demo/([a-z0-9-]+)$#', $route, $m)) {
+        $bp = Blueprints::find($m[1]);
+        if (!$bp || !$bp['ready'] || !$bp['enabled']) {
+            wpl_error_page(404, 'Demo not found', 'This demo is not available right now.');
+        }
+        foreach (Sites::forOwner(Visitor::ownerHash()) as $s) {
+            if ($s['blueprint_id'] === $bp['id'] && ((int) $s['expires_at'] === 0 || (int) $s['expires_at'] > time())) {
+                Http::redirect(url('go/' . $s['slug']));
+            }
+        }
+        View::render('demo', ['title' => $bp['name'], 'bp' => $bp, 'flash' => Http::takeFlash()]);
     }
 
     if (preg_match('#^(ready|go)/(' . WPL_SLUG_RE . ')$#', $route, $m)) {

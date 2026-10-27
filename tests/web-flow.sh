@@ -79,6 +79,23 @@ check "lands in wp-admin" "$(req visitor "$(loc)")" 302
 case "$(loc)" in */wp-admin/) ok "redirected to dashboard";; *) bad "autologin went to $(loc)";; esac
 req visitor "$base/" >/dev/null; has "listed under your demos" "Your demos"
 
+echo "▸ product link (/demo/<blueprint>)"
+req admin "$base/admin/blueprints/web-flow-demo" >/dev/null; has "link shown in the panel" "$base/demo/web-flow-demo"
+check "product page" "$(req fresh "$base/demo/web-flow-demo")" 200
+has "asks for the email first" 'name="email"'
+grep -q 'data-autostart' "$tmp/body" && bad "starts by itself although an email is required" || ok "waits for the email"
+check "unknown product → 404" "$(req fresh "$base/demo/no-such-demo")" 404
+check "visitor with a running demo" "$(req visitor "$base/demo/web-flow-demo")" 302
+case "$(loc)" in *"go/$slug") ok "is taken back into it";; *) bad "went to $(loc)";; esac
+check "launch from product page" "$(req fresh "$base/launch" -d "_csrf=$(req fresh "$base/demo/web-flow-demo" >/dev/null; csrf)&blueprint=web-flow-demo&next=go&email=second@example.com")" 302
+case "$(loc)" in */go/*) ok "goes straight into the demo";; *) bad "went to $(loc)";; esac
+check "autologin" "$(req fresh "$(loc)")" 302
+check "lands in wp-admin" "$(req fresh "$(loc)")" 302
+req admin "$base/admin/settings" >/dev/null
+check "turn off email capture" "$(req admin "$base/admin/settings" --data-urlencode "_csrf=$(csrf)" -d "section=launcher&brand_name=Acme+Demos&accent=%23e11d48&launcher_title=Try+Acme&launcher_intro=Hi&logo_url=&footer_text=&email_capture=off&consent_text=")" 302
+check "product page, no email asked" "$(req newcomer "$base/demo/web-flow-demo")" 200
+has "starts by itself" 'data-autostart'
+
 echo "▸ admin actions"
 req admin "$base/admin" >/dev/null; has "demo on dashboard" "$slug"; has "lead email shown" "lead@example.com"
 check "extend" "$(req admin "$base/admin/sites/$slug/extend" --data-urlencode "_csrf=$(csrf)" -d "duration=1d")" 302

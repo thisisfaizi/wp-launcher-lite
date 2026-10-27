@@ -43,6 +43,13 @@
       btn.disabled = true;
     });
   });
+  // A product's own demo page with nothing to fill in starts by itself.
+  $$('[data-autostart]').forEach(function (form) {
+    var btn = $('button[type=submit]', form);
+    btn.classList.add('busy');
+    btn.disabled = true;
+    form.submit();
+  });
   // Back/forward cache: re-enable buttons when the page is shown again.
   window.addEventListener('pageshow', function () {
     $$('[data-launch] button').forEach(function (b) { b.classList.remove('busy'); b.disabled = false; });

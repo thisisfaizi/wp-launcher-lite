@@ -11,7 +11,7 @@
  *   wpl-uploads/  per-site media uploads
  */
 
-define('WPL_VERSION', '0.1.0');
+define('WPL_VERSION', '0.1.2');
 define('WPL_MIN_PHP', '8.0.0');
 
 define('WPL_ROOT', dirname(__DIR__));

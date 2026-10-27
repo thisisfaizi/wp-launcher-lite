@@ -84,6 +84,33 @@ class SiteDb
         return (string) $row['user_login'];
     }
 
+    /**
+     * Remove plugin and theme zips that WordPress is holding for an install
+     * from a site's database, and return their paths relative to uploads.
+     * Uploading a plugin over an installed one stops at "Replace current with
+     * uploaded?" with the zip parked in the media folder; a demo cloned then
+     * would serve the operator's (possibly paid) plugin to anyone.
+     *
+     * @return string[]
+     */
+    public static function dropUpgraderPackages(string $slug): array
+    {
+        [$pdo, $prefix] = self::open($slug);
+        $posts = self::q($prefix . 'posts');
+        $meta = self::q($prefix . 'postmeta');
+        $st = $pdo->prepare("SELECT post_id FROM $meta WHERE meta_key = '_wp_attachment_context' AND meta_value = 'upgrader'");
+        $st->execute();
+        $ids = array_map('intval', $st->fetchAll(PDO::FETCH_COLUMN));
+        if (!$ids) {
+            return [];
+        }
+        $in = implode(',', $ids);
+        $files = $pdo->query("SELECT meta_value FROM $meta WHERE meta_key = '_wp_attached_file' AND post_id IN ($in)")->fetchAll(PDO::FETCH_COLUMN);
+        $pdo->exec("DELETE FROM $meta WHERE post_id IN ($in)");
+        $pdo->exec("DELETE FROM $posts WHERE ID IN ($in)");
+        return array_values(array_filter(array_map('strval', $files)));
+    }
+
     /** Size of a site's database in bytes (best effort). */
     public static function size(string $slug): int
     {

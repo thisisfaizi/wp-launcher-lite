@@ -29,6 +29,15 @@
     <?php endif; ?>
   </section>
 
+  <?php if ($bp['ready']): ?>
+  <section class="card stack">
+    <h2>Link for your website</h2>
+    <p class="muted">Point a "Try the demo" button on your own site here. It builds a fresh demo and logs the visitor straight in (after asking for an email, if you collect them). Someone who already has one running goes back to it.</p>
+    <label class="field"><span>Demo link</span><input readonly class="mono" data-copy value="<?= e(url('demo/' . $bp['id'])) ?>"></label>
+    <?php if (!$bp['enabled']): ?><p class="fine">Turn on <strong>Show on the launcher page</strong> below first; hidden demos can't be launched.</p><?php endif; ?>
+  </section>
+  <?php endif; ?>
+
   <form method="post" class="stack" id="<?= e($form) ?>">
     <?= Wpl\View::csrfField() ?>
     <?php require __DIR__ . '/_blueprint_fields.php'; ?>

@@ -57,6 +57,10 @@ Never needed: `exec()`, wp-cli, Composer, Node, SSH, root, or permission to crea
 
 Share `https://yourdomain.com/demos/`. That's the launcher.
 
+### Updating WP Launcher Lite
+
+Upload `wp-launcher-lite-<version>-update.zip` to the launcher folder and *Extract*, overwriting files. It leaves out `.htaccess` (which holds your routing rules) and never contains `wpl-data/`, `wpl-core/`, `wpl-content/` or `wpl-uploads/`, so settings, blueprints and running demos are untouched. Don't extract the full release zip over an install: its pre-install `.htaccess` would replace your routing rules (if that happens, *System → Rewrite routing rules* puts them back).
+
 ### Demo addresses
 
 | Mode | Demo URL | Needs |
@@ -69,6 +73,7 @@ Subdomain mode gives every demo its own browser origin (see [Security](#security
 ## Using it
 
 - **Blueprints** — one per product. *Edit template in wp-admin* logs you into the template. Changes there apply to demos launched afterwards; running demos keep what they started with. Plugin *files* are shared, so updating a plugin in the template updates it for running demos too.
+- **A button on your own website** — every blueprint has its own link, `https://yourdomain.com/demos/demo/<blueprint>` (copy it from the blueprint's page in the panel). Point a "Try the demo" button at it: the visitor lands in a fresh demo, logged in, in one click — or after entering an email, if you collect them. A visitor who already has that demo running is taken back to it.
 - **Restrictions** — per blueprint you can also block export/import and hide admin menus. Installing, updating or editing plugins, themes and core is **always** blocked on demos (see below).
 - **Limits** — total running demos, launches per IP per hour, running demos per visitor, upload size and media quota. Defaults are deliberately low: shared hosts suspend accounts that hog CPU or disk.
 - **Leads** — turn on *Ask for an email* in Settings; download them as CSV, or send each launch to Zapier/Make/your CRM with the **webhook** (`site.created`, `site.expired`, `site.deleted`, HMAC-SHA256 signed in `X-WPL-Signature`, same as upstream).

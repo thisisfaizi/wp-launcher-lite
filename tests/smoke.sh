@@ -56,12 +56,28 @@ check "template built over HTTP" "$built" yes
 grep -q "activated hello-dolly" "$tmp/body" && ok "blueprint plugin installed + activated" || bad "blueprint plugin not activated"
 tpl=$(php_eval 'echo Wpl\Blueprints::find("smoke")["template_slug"];')
 
+# A plugin zip parked in the template's media, as WordPress leaves it on the
+# "Replace current with uploaded?" screen, next to an ordinary media file.
+upgrader_rows() { php_eval '$s = "'"$1"'"; $pdo = Wpl\Db::engine() === "mysql" ? Wpl\Db::pdo() : Wpl\Db::connectSqlite(Wpl\SiteDb::sqliteFile($s)); $st = $pdo->prepare("SELECT COUNT(*) FROM " . Wpl\SiteDb::prefix($s) . "postmeta WHERE meta_key = ? AND meta_value = ?"); $st->execute(["_wp_attachment_context", "upgrader"]); echo $st->fetchColumn();'; }
+php_eval '$s = "'"$tpl"'"; $pdo = Wpl\Db::engine() === "mysql" ? Wpl\Db::pdo() : Wpl\Db::connectSqlite(Wpl\SiteDb::sqliteFile($s)); $p = Wpl\SiteDb::prefix($s); $d = "2026-01-01 00:00:00";
+  $pdo->prepare("INSERT INTO {$p}posts (post_author, post_date, post_date_gmt, post_content, post_title, post_excerpt, post_status, post_name, to_ping, pinged, post_modified, post_modified_gmt, post_content_filtered, guid, post_type, post_mime_type) VALUES (1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
+    ->execute([$d, $d, "", "paid-plugin.zip", "", "private", "paid-plugin", "", "", $d, $d, "", "", "attachment", "application/zip"]);
+  $id = (int) $pdo->lastInsertId();
+  $pdo->prepare("INSERT INTO {$p}postmeta (post_id, meta_key, meta_value) VALUES (?, ?, ?), (?, ?, ?)")
+    ->execute([$id, "_wp_attached_file", "2026/01/paid-plugin.zip", $id, "_wp_attachment_context", "upgrader"]);'
+mkdir -p "$dir/wpl-uploads/$tpl/2026/01"
+echo "PK paid plugin" > "$dir/wpl-uploads/$tpl/2026/01/paid-plugin.zip"
+echo "ordinary media" > "$dir/wpl-uploads/$tpl/2026/01/photo.txt"
+
 echo "▸ launch"
 json=$(php_eval '$s = Wpl\Sites::launch(Wpl\Blueprints::find("smoke"), "smoke-owner", "lead@example.com", "127.0.0.1"); echo json_encode(["slug" => $s["slug"], "login" => Wpl\Sites::loginUrl($s["slug"])]);')
 slug=$(echo "$json" | php -r 'echo json_decode(stream_get_contents(STDIN), true)["slug"];')
 login=$(echo "$json" | php -r 'echo json_decode(stream_get_contents(STDIN), true)["login"];')
 url=$(site_url "$slug")
 [ -n "$slug" ] && ok "demo launched ($slug)" || { bad "launch failed: $json"; exit 1; }
+check "plugin zip waiting in the template is not copied" "$(req "$url/wp-content/uploads/2026/01/paid-plugin.zip")" 404
+check "…nor its media record" "$(upgrader_rows "$slug")" 0
+check "ordinary template media is copied" "$(req "$url/wp-content/uploads/2026/01/photo.txt")" 200
 
 check "front page" "$(req "$url/")" 200
 grep -q "$url" "$tmp/body" && ok "links point at the demo" || bad "front page has no demo links"
