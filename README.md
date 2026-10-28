@@ -1,6 +1,6 @@
 # WP Launcher Lite
 
-Temporary WordPress demo sites on **ordinary shared hosting** — no Docker, no VPS, no root, no shell.
+Temporary WordPress demo sites for plugin and theme demos, self-hosted on **ordinary shared hosting** — no Docker, no VPS, no root, no shell.
 
 Visitors click **Launch demo** and get a private copy of your product's WordPress site in about a second, logged in and ready to try. When its time is up it deletes itself. You get the leads.
 
@@ -17,6 +17,10 @@ It is a PHP port of the *agency mode* of [WP Launcher](https://github.com/msrbui
 | Blueprint JSON | ✓ | ✓ — upstream blueprints import unchanged |
 
 Dropped on purpose because shared hosting can't do them or they don't belong in a demo launcher: local dev mode and the `wpl` CLI, multi-PHP and live php.ini changes, Mini CRM / client portal, productivity tracking, site sync, editor extensions.
+
+**Alternatives.** Hosted services such as InstaWP and TasteWP also give you temporary WordPress sandbox and demo sites, which run on their servers. WP Launcher Lite is self-hosted on your own cPanel or shared hosting, so the demo sites and the leads they bring in stay with you.
+
+<sub>Product names are trademarks of their owners; listed for comparison only.</sub>
 
 ## How it works
 
