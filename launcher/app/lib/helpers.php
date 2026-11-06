@@ -29,6 +29,16 @@ function url(string $path = '', array $query = []): string
 }
 
 /** URL of a static file in /assets, cache-busted by version. */
+/** A small inline SVG icon (stroke = currentColor), sized to the text it sits in. */
+function icon(string $name): string
+{
+    $paths = [
+        'external' => 'M7 17 17 7M9 7h8v8',
+        'arrow' => 'M5 12h14M13 6l6 6-6 6',
+    ];
+    return '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="' . $paths[$name] . '"/></svg>';
+}
+
 function asset(string $file): string
 {
     return Config::baseUrl() . '/assets/' . $file . '?v=' . WPL_VERSION;

@@ -26,14 +26,14 @@ $items = [
 <body class="admin">
 <div class="shell">
   <aside class="sidebar">
-    <a class="brand" href="<?= e(url('admin')) ?>"><span class="brand-mark" aria-hidden="true"></span><span>Launcher</span></a>
+    <a class="brand" href="<?= e(url('admin')) ?>"><svg class="brand-mark" viewBox="0 0 26 26" aria-hidden="true"><rect width="26" height="26" rx="5" fill="currentColor"/><rect class="bm-line" x="10.5" y="6.5" width="9" height="9" rx="1.5" fill="none" stroke-width="1.6"/><rect class="bm-fg" x="6.5" y="10.5" width="9" height="9" rx="1.5"/></svg><span>Launcher</span></a>
     <nav>
       <?php foreach ($items as $key => [$path, $label]): ?>
         <a href="<?= e(url($path)) ?>" class="<?= $nav === $key ? 'active' : '' ?>"><?= e($label) ?></a>
       <?php endforeach; ?>
     </nav>
     <div class="sidebar-foot">
-      <a href="<?= e(url('')) ?>" target="_blank" rel="noopener">View launcher ↗</a>
+      <a href="<?= e(url('')) ?>" target="_blank" rel="noopener">View launcher <?= icon('external') ?></a>
       <form method="post" action="<?= e(url('admin/logout')) ?>"><?= Wpl\View::csrfField() ?><button class="linkish" type="submit">Sign out</button></form>
     </div>
   </aside>

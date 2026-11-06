@@ -10,8 +10,6 @@ $c = $bp['config'];
 <article class="card demo-card">
   <?php if ($c['image_url'] !== ''): ?>
     <img class="demo-img" src="<?= e($c['image_url']) ?>" alt="" loading="lazy">
-  <?php else: ?>
-    <div class="demo-img demo-img-blank" aria-hidden="true"><span><?= e(mb_strtoupper(mb_substr($bp['name'], 0, 1))) ?></span></div>
   <?php endif; ?>
   <div class="demo-body">
     <h2><?= e($bp['name']) ?></h2>

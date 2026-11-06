@@ -5,7 +5,7 @@ use Wpl\Settings;
 
 $installed = Config::installed();
 $brand = $installed ? (string) Settings::get('brand_name') : 'WP Launcher Lite';
-$accent = $installed ? (string) Settings::get('accent') : '#2563eb';
+$accent = $installed ? (string) Settings::get('accent') : '#2271b1';
 $logo = $installed ? (string) Settings::get('logo_url') : '';
 $footer = $installed ? (string) Settings::get('footer_text') : '';
 ?><!doctype html>
@@ -21,7 +21,7 @@ $footer = $installed ? (string) Settings::get('footer_text') : '';
 <body class="public">
 <header class="topbar">
   <a class="brand" href="<?= e($installed ? url('') : '#') ?>">
-    <?php if ($logo !== ''): ?><img src="<?= e($logo) ?>" alt="" class="brand-logo"><?php else: ?><span class="brand-mark" aria-hidden="true"></span><?php endif; ?>
+    <?php if ($logo !== ''): ?><img src="<?= e($logo) ?>" alt="" class="brand-logo"><?php else: ?><svg class="brand-mark" viewBox="0 0 26 26" aria-hidden="true"><rect width="26" height="26" rx="5" fill="currentColor"/><rect class="bm-line" x="10.5" y="6.5" width="9" height="9" rx="1.5" fill="none" stroke-width="1.6"/><rect class="bm-fg" x="6.5" y="10.5" width="9" height="9" rx="1.5"/></svg><?php endif; ?>
     <span><?= e($brand) ?></span>
   </a>
 </header>

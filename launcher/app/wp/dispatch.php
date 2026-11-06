@@ -149,12 +149,12 @@ function wpl_dispatch_page(int $status, string $title, string $text, ?string $li
     echo <<<HTML
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">
 <title>$t</title><style>
-:root{color-scheme:light dark;--bg:#f6f7f9;--card:#fff;--fg:#111827;--muted:#6b7280;--accent:#2563eb}
-@media (prefers-color-scheme:dark){:root{--bg:#0b0f17;--card:#131a26;--fg:#e5e7eb;--muted:#9ca3af;--accent:#60a5fa}}
+:root{color-scheme:light dark;--bg:#f0f0f1;--card:#fff;--fg:#1d2327;--muted:#50575e;--accent:#2271b1;--line:#dcdcde}
+@media (prefers-color-scheme:dark){:root{--bg:#1d2327;--card:#2c3338;--fg:#f0f0f1;--muted:#a7aaad;--accent:#2271b1;--line:#3c434a}}
 body{margin:0;min-height:100vh;display:grid;place-items:center;background:var(--bg);color:var(--fg);font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif;padding:16px;box-sizing:border-box}
-main{max-width:420px;background:var(--card);border-radius:16px;padding:32px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
-h1{font-size:1.35rem;margin:0 0 8px}p{color:var(--muted);margin:0 0 24px}
-a{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;padding:10px 18px;border-radius:10px;font-weight:600}
+main{max-width:420px;background:var(--card);border:1px solid var(--line);border-radius:4px;padding:28px}
+h1{font-size:1.3rem;font-weight:600;margin:0 0 8px}p{color:var(--muted);margin:0 0 24px}
+a{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;padding:8px 16px;border-radius:3px;font-weight:500}
 </style></head><body><main><h1>$t</h1><p>$p</p>$a</main></body></html>
 HTML;
     exit;

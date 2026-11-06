@@ -20,7 +20,7 @@ class Settings
             'launcher_title' => 'Try it live',
             'launcher_intro' => 'Launch a private WordPress demo in seconds. No signup, no credit card. It deletes itself when the time is up.',
             'logo_url' => '',
-            'accent' => '#2563eb',
+            'accent' => '#2271b1',
             'footer_text' => '',
 
             // Lead capture: off | optional | required
@@ -70,6 +70,10 @@ class Settings
                 if (!array_key_exists($key, $out)) {
                     $out[$key] = $value;
                 }
+            }
+            // 0.1.2 and earlier stored Tailwind blue as the default accent; move untouched installs to WordPress blue.
+            if (strtolower((string) ($out['accent'] ?? '')) === '#2563eb') {
+                $out['accent'] = '#2271b1';
             }
             self::$cache = $out;
         }

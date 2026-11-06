@@ -254,12 +254,12 @@ function wpl_setup_page(int $pct, string $title, array $log, string $next, strin
 <meta http-equiv="refresh" content="<?php echo (int) $delay; ?>;url=<?php echo esc_attr($next); ?>">
 <title><?php echo esc_html($title); ?></title>
 <style>
-:root{color-scheme:light dark;--bg:#f6f7f9;--card:#fff;--fg:#111827;--muted:#6b7280;--accent:#2563eb;--track:#e5e7eb;--bad:#b91c1c}
-@media (prefers-color-scheme:dark){:root{--bg:#0b0f17;--card:#131a26;--fg:#e5e7eb;--muted:#9ca3af;--accent:#60a5fa;--track:#1f2937;--bad:#f87171}}
+:root{color-scheme:light dark;--bg:#f0f0f1;--card:#fff;--fg:#1d2327;--muted:#50575e;--accent:#2271b1;--track:#dcdcde;--bad:#b32d2e}
+@media (prefers-color-scheme:dark){:root{--bg:#1d2327;--card:#2c3338;--fg:#f0f0f1;--muted:#a7aaad;--accent:#72aee6;--track:#3c434a;--bad:#ff8085}}
 body{margin:0;min-height:100vh;display:grid;place-items:center;background:var(--bg);color:var(--fg);font:15px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif;padding:16px;box-sizing:border-box}
-main{width:100%;max-width:520px;background:var(--card);border-radius:16px;padding:28px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
-h1{font-size:1.2rem;margin:0 0 4px}.sub{color:var(--muted);margin:0 0 18px}
-.bar{height:8px;background:var(--track);border-radius:99px;overflow:hidden}.bar i{display:block;height:100%;background:var(--accent);width:<?php echo (int) $pct; ?>%;transition:width .3s}
+main{width:100%;max-width:520px;background:var(--card);border:1px solid var(--track);border-radius:4px;padding:28px}
+h1{font-size:1.2rem;font-weight:600;margin:0 0 4px}.sub{color:var(--muted);margin:0 0 18px}
+.bar{height:8px;background:var(--track);border-radius:2px;overflow:hidden}.bar i{display:block;height:100%;background:var(--accent);width:<?php echo (int) $pct; ?>%;transition:width .3s}
 ul{margin:18px 0 0;padding-left:18px;color:var(--muted);font-size:13px}li.bad{color:var(--bad)}
 a{color:var(--accent)}
 </style></head>

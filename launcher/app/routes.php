@@ -456,7 +456,7 @@ function wpl_admin_routes(string $route): void
                     Settings::set('email_capture', 'off');
                 }
                 if (!preg_match('/^#[0-9a-fA-F]{6}$/', (string) Settings::get('accent'))) {
-                    Settings::set('accent', '#2563eb');
+                    Settings::set('accent', '#2271b1');
                 }
                 Http::flash('Settings saved. Demo limits apply to demos launched from now on.');
             }

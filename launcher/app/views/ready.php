@@ -2,12 +2,12 @@
 $c = $bp['config'] ?? [];
 ?>
 <section class="ready card">
-  <div class="ready-icon" aria-hidden="true">✓</div>
+  <div class="ready-icon" aria-hidden="true"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="20" cy="20" r="18"/><path d="M12.5 20.5l5 5 10-11"/></svg></div>
   <h1>Your demo is ready</h1>
   <p class="lede">A private copy of <strong><?= e($bp['name'] ?? 'the demo') ?></strong>, just for you.
     <?php if ($site['expires_at']): ?>It deletes itself <span data-countdown="<?= (int) $site['expires_at'] ?>"><?= e(relative_time((int) $site['expires_at'])) ?></span>.<?php endif; ?></p>
 
-  <a class="btn btn-primary btn-lg" href="<?= e(url('go/' . $site['slug'])) ?>">Open the dashboard →</a>
+  <a class="btn btn-primary btn-lg" href="<?= e(url('go/' . $site['slug'])) ?>">Open the dashboard <?= icon('arrow') ?></a>
 
   <dl class="creds">
     <div><dt>Site</dt><dd><a href="<?= e($url) ?>/" target="_blank" rel="noopener"><?= e($url) ?></a></dd></div>

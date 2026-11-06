@@ -31,10 +31,10 @@ function wpl_countdown_assets(): void
     $launcher = esc_js(WPL_SITE['launcher_url']);
     ?>
     <style>
-        #wpadminbar .wpl-timer-node { background: #059669 !important; transition: background-color .5s ease; }
+        #wpadminbar .wpl-timer-node { background: #008a20 !important; transition: background-color .5s ease; }
         #wpadminbar .wpl-timer-node > a { color: #fff !important; font-weight: 600; font-variant-numeric: tabular-nums; }
-        #wpadminbar .wpl-timer-node.wpl-warn { background: #d97706 !important; }
-        #wpadminbar .wpl-timer-node.wpl-crit { background: #dc2626 !important; }
+        #wpadminbar .wpl-timer-node.wpl-warn { background: #996800 !important; }
+        #wpadminbar .wpl-timer-node.wpl-crit { background: #d63638 !important; }
     </style>
     <script>
     (function () {

@@ -17,8 +17,8 @@
     <?php else: ?>
       <p class="muted">Set it up exactly how a visitor should find it: install premium plugins, import content, configure settings. New demos copy it; running ones are not affected.</p>
       <div class="row-actions">
-        <form method="post" action="<?= e(url('admin/blueprints/' . $bp['id'] . '/open')) ?>" target="_blank"><?= Wpl\View::csrfField() ?><button class="btn btn-primary" type="submit">Edit template in wp-admin ↗</button></form>
-        <a class="btn btn-ghost" href="<?= e($templateUrl) ?>/" target="_blank" rel="noopener">View site ↗</a>
+        <form method="post" action="<?= e(url('admin/blueprints/' . $bp['id'] . '/open')) ?>" target="_blank"><?= Wpl\View::csrfField() ?><button class="btn btn-primary" type="submit">Edit template in wp-admin <?= icon('external') ?></button></form>
+        <a class="btn btn-ghost" href="<?= e($templateUrl) ?>/" target="_blank" rel="noopener">View site <?= icon('external') ?></a>
       </div>
       <dl class="meta">
         <div><dt>Template media</dt><dd><?= number_format($usage['files']) ?> files · <?= round($usage['bytes'] / 1048576, 1) ?> MB <small class="muted">copied into every demo</small></dd></div>
